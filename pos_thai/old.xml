@@ -1,0 +1,190 @@
+
+
+
+
+<record model="ir.ui.view" id="partner_pack_form_view_tree">
+	<field name="name">Clients pack Tree</field>
+	<field name="type">tree</field>
+	<field name="model">partner.pack</field>
+	<field name="arch" type="xml">
+		<tree string="Clients pack">
+			<field name="state"/>
+			<field name="id"/>
+			<field name="qty"/>
+
+		</tree>
+	</field>
+</record>
+
+<record model="ir.ui.view" id="partner_pack_form_view">
+<field name="name">Clients pack Form</field>
+<field name="type">form</field>
+<field name="model">partner.pack</field>
+<field name="arch" type="xml">
+	<form string="Clients pack" version="7.0">
+		<group>
+
+			<group>
+				<field name="id"/>
+				<field name="state"/>
+				<field name="qty"/>
+			</group>
+
+			<newline/>
+
+			<group colspan="4">
+				<button name="action_generate_clients" type="object" string="Generate clients"
+						states="draft"/>
+				<field name="partner_ids" colspan="4" nolabel="0"/>
+
+				<field name="session_ids" colspan="4" nolabel="0"/>
+			</group>
+
+		</group>
+	</form>
+</field>
+</record>
+
+<record model="ir.ui.view" id="pos_order_session_form_view">
+<field name="name">Bus sessions Form</field>
+<field name="type">form</field>
+<field name="model">pos.order.session</field>
+<field name="arch" type="xml">
+	<form string="Bus sessions" version="7.0">
+		<group>
+			<group>
+				<field name="id"/>
+				<field name="state"/>
+
+
+				<field name="name"/>
+			</group>
+			<group>
+				<field name="leader_id"/>
+				<field name="driver_id"/>
+				<field name="ref_company_id"/>
+				<field name="n_max"/>
+			</group>
+		</group>
+	</form>
+</field>
+</record>
+
+<record model="ir.ui.view" id="order_pack_form_view">
+<field name="name">Order pack Form</field>
+<field name="type">form</field>
+<field name="model">pos.order.pack</field>
+<field name="arch" type="xml">
+	<form string="Order pack" version="7.0">
+		<group>
+
+			<group>
+				<field name="id"/>
+				<field name="name"/>
+				<field name="state"/>
+
+			</group>
+			<group>
+				<field name="bus_session_id"/>
+				<field name="leader_id"/>
+				<field name="driver_id"/>
+				<field name="ref_company_id"/>
+				<field name="n_max"/>
+			</group>
+
+			<newline/>
+
+			<group colspan="4">
+				<h1>
+					<label string="Discount"/>
+					<field name="discount" class="oe_inline"/>
+				</h1>
+				<h1>
+					<label string=""/>
+
+				</h1>
+				<h1>
+					<label string="Total"/>
+					<field name="amount_total" class="oe_inline"/>
+				</h1>
+				<h1>
+					<label string=""/>
+
+				</h1>
+				<h1>
+					<label string="Cash"/>
+					<field name="cash" class="oe_inline"/>
+				</h1>
+				<h1>
+					<label string=""/>
+				</h1>
+				<h1>
+					<label string="Change"/>
+					<field name="change" class="oe_inline"/>
+				</h1>
+				<h1>
+					<label string=""/>
+				</h1>
+				<h1>
+					<button name="action_paid" type="object" string="Paid"
+							states="draft"/>
+				</h1>
+
+			</group>
+
+			<group colspan="4">
+				<field name="order_lines_ids" colspan="4" nolabel="0"/>
+				<field name="order_ids" colspan="4" nolabel="0"/>
+			</group>
+
+		</group>
+	</form>
+</field>
+</record>
+<record model="ir.ui.view" id="order_pack_form_view_tree">
+<field name="name">order pack Tree</field>
+<field name="type">tree</field>
+<field name="model">pos.order.pack</field>
+<field name="arch" type="xml">
+	<tree string="Order packs">
+		<field name="id"/>
+		<field name="name"/>
+		<field name="state"/>
+		<field name="leader_id"/>
+		<field name="driver_id"/>
+		<field name="ref_company_id"/>
+	</tree>
+</field>
+</record>
+
+
+<record id="action_pos_packs" model="ir.actions.act_window">
+<field name="name">Order packs</field>
+<field name="type">ir.actions.act_window</field>
+<field name="res_model">pos.order.pack</field>
+<field name="view_mode">tree,form</field>
+</record>
+
+
+<menuitem
+parent="point_of_sale.menu_point_of_sale"
+action="action_pos_packs"
+id="menu_pos_packs"
+sequence="200"
+groups="point_of_sale.group_pos_manager"/>
+
+
+<record id="partner_pack_action" model="ir.actions.act_window">
+<field name="name">Clients pack</field>
+<field name="type">ir.actions.act_window</field>
+<field name="res_model">partner.pack</field>
+<field name="view_mode">tree,form</field>
+</record>
+
+<menuitem action="partner_pack_action"
+		  id="pack_action_menu"
+		  name="Clients pack"
+
+		  parent="point_of_sale.menu_point_of_sale"
+		  groups="point_of_sale.group_pos_manager"
+		  sequence="20"/>

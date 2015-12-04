@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+
+		<record model="ir.ui.view" id="view_order_form_inherit2">
+			<field name="name">sale.order.form.inherit2</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+
+				<notebook position="inside">
+					<page string="Bookeo">
+						<group>
+							<group>
+								<field name="book_session_id"/>
+								<field name="vehicle_id"/>
+
+								<field name="root_product"/>
+								<field name="bookeo_code"/>
+
+								<field name="hotel_area_id"/>
+								<field name="room_no"/>
+								<field name="hotel_name"/>
+								<field name="voucher_no"/>
+								<field name="remark"/>
+								<field name="tourists_name"/>
+							</group>
+						</group>
+					</page>
+				</notebook>
+
+			</field>
+		</record>
+
+		<record id="view_booking_tree" model="ir.ui.view">
+			<field name="name">sale.order.booking.tree</field>
+			<field name="model">sale.order</field>
+			<field name="arch" type="xml">
+				<tree string="Booking" editable="top/bottom">
+					<field name="state" invisible="1"/>
+
+					<field name="book_session_id"/>
+					<field name="vehicle_id"/>
+
+					<field name="partner_id"/>
+					<field name="voucher_no"/>
+
+					<field name="hotel_area_id"/>
+					<field name="hotel_name"/>
+					<field name="room_no"/>
+					<field name="tourists_name"/>
+
+					<field name="adult"/>
+					<field name="child"/>
+					<field name="infant"/>
+
+					<field name="date_start"/>
+					<field name="remark"/>
+					<field name="name"/>
+
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_booking_filter" model="ir.ui.view">
+			<field name="name">sale.order.select</field>
+			<field name="model">sale.order</field>
+			<field name="arch" type="xml">
+				<search string="Search Invoice">
+
+					<filter name="undriver" string="Driver unset" domain="[('vehicle_id','=',  False)]"/>
+					<separator/>
+
+					<field name="hotel_area_id" string="Area"/>
+					<field name="vehicle_id" string="Vehicle"/>
+					<field name="root_product" string="Tour name"/>
+					<field name="book_session_id" string="Session"/>
+
+					<separator/>
+
+					<group expand="0" string="Group By">
+						<filter string="Area" context="{'group_by':'hotel_area_id'}"/>
+						<filter string="Vehicle" context="{'group_by':'vehicle_id'}"/>
+						<separator/>
+						<filter string="Tour name" context="{'group_by':'root_product'}"/>
+						<filter string="Session" context="{'group_by':'book_session_id'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+
+	</data>
+</openerp>

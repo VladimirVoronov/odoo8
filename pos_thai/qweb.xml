@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+	<t t-extend="XmlReceipt">
+		<t t-jquery="receipt[align='center']" t-operation="replace">
+
+			<receipt align='center' width='65' value-thousands-separator=''>
+				<h1>
+					<t t-esc='receipt.company.name'/>
+				</h1>
+
+				<div>------------------------------</div>
+				<div font='b'>
+					<div>
+						<t t-esc='receipt.name'/>
+					</div>
+					<div>
+						<t t-esc='receipt.date.localestring'/>
+					</div>
+				</div>
+				<div>------------------------------</div>
+				<!-- Orderlines -->
+
+				<t t-foreach='receipt.orderlines' t-as='line'>
+
+					<line>
+
+						<left>
+							<t t-esc='line.product_name'/>
+						</left>
+
+						<right>
+							<t t-esc='line.quantity'/>
+
+							<t t-if='line.unit_name !== "Unit(s)"'>
+								<t t-esc='line.unit_name'/>
+							</t>
+							x
+							<value value-decimals='2'>
+								<t t-esc='line.price'/>
+							</value>
+
+							<t t-if='line.discount !== 0'>
+								Disc:<t t-esc='line.discount'/>%
+							</t>
+							=
+							<value>
+								<t t-esc='line.price_display'/>
+							</value>
+						</right>
+					</line>
+
+				</t>
+				<div>------------------------------</div>
+				<!-- Total -->
+				<h1>TOTAL:
+					<value value-decimals='2'>
+						<t t-esc="receipt.total_with_tax"/>
+					</value>
+				</h1>
+
+				<t t-foreach='receipt.paymentlines' t-as='line'>
+					<h4>
+						<t t-esc='line.journal'/>:
+
+						<value value-decimals='2'>
+							<t t-esc='line.amount'/>
+						</value>
+					</h4>
+				</t>
+
+				<h2>CHANGE:
+					<value value-decimals='2'>
+						<t t-esc='receipt.change'/>
+					</value>
+				</h2>
+
+				<!-- Extra Payment Info -->
+				<t t-if='receipt.total_discount'>
+					<h5>Discounts:
+						<value value-decimals='2'>
+							<t t-esc='receipt.total_discount'/>
+						</value>
+					</h5>
+				</t>
+
+				<br/>
+				<br/>
+				<div>------------------------------</div>
+
+			</receipt>
+
+
+		</t>
+
+	</t>
+</templates>

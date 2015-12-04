@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record id="view_partner_pos_form" model="ir.ui.view">
+			<field name="name">res.partner.product.pos.form.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="point_of_sale.view_partner_property_form"/>
+			<field name="arch" type="xml">
+				<field name="ean13" position="after">
+					<field name="pos_disc"/>
+					<field name="sys_pos_disc"/>
+
+					<field name="commission_leader"/>
+				</field>
+			</field>
+		</record>
+
+
+
+	</data>
+</openerp>

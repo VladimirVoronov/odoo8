@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="view_partner_form_food">
+			<field name="name">res.partner.form.inheritru_food</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="account.view_partner_property_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//page[@name='accounting']/group/group[last()]" position="after">
+					<group string="Local VAT">
+						<field name="vat_code"/>
+						<field name="vat_country_id"/>
+						<field name="vat_number"/>
+					</group>
+					<group string="Local Other">
+						<field name="manual_balance"/>
+						<field name="currency_id"/>
+						<field name="mi"/>
+						<field name="customer_type"/>
+						<field name="rep"/>
+						<field name="account_no"/>
+						<field name="report_colour"/>
+					</group>
+				</xpath>
+			</field>
+		</record>
+
+
+		<record id="view_partner_tour_form" model="ir.ui.view">
+			<field name="name">res.partner.tour.form.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="priority">2</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//label[@for='street']" position="after">
+					<label for="street" string="Local"/>
+					<div>
+						<field name="thai_name" placeholder="Local Company name" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+						<field name="thai_street" placeholder="Street..." attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+						<field name="thai_street2" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+
+						<div class="address_format">
+							<field name="thai_city" placeholder="City" style="width: 40%%" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+						</div>
+
+						<field name="thai_country" placeholder="Country" class="oe_no_button" options='{"no_open": True, "no_create": True}' attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+					</div>
+				</xpath>
+
+			</field>
+		</record>
+	</data>
+</openerp>

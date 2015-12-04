@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <record id="avg_purchase_price" model="product.price.type">
+            <field name="name">avg purchase Price</field>
+            <field name="field">avg_purchase_price</field>
+        </record>
+
+    </data>
+</openerp>

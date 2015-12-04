@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="view_mail_mandrill_form" model="ir.ui.view">
+			<field name="name">res.mail.mandrill.form.inherit</field>
+			<field name="model">mail.message</field>
+			<field name="priority">20</field>
+			<field name="inherit_id" ref="mail.view_message_form" />
+			<field name="arch" type="xml">
+				<field name="subtype_id" position="after">
+					<field name="mandrill_status" />
+					<field name="mandrill_id" />
+					<field name="mandrill_reject_reason" />
+				</field>
+			</field>
+		</record>
+	</data>
+</openerp>

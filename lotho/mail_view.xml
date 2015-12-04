@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="view_mail_lotho_form" model="ir.ui.view">
+			<field name="name">res.mail.lotho.form.inherit</field>
+			<field name="model">mail.message</field>
+			<field name="priority">2</field>
+			<field name="inherit_id" ref="mail.view_message_form" />
+			<field name="arch" type="xml">
+				<field name="body" position="after">
+					<button name="resend_mail" type="object" string="Resend"  />
+					<field name="attachment_ids" />
+				</field>
+			</field>
+		</record>
+	</data>
+</openerp>

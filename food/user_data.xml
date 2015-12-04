@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+       <record id="product_uom1" model="product.uom">
+            <field name="category_id" ref="product.product_uom_categ_unit"/>
+            <field name="name">PrizP</field>
+            <field name="factor_inv" eval="12"/>
+            <field name="uom_type">bigger</field>
+        </record>
+
+		<record id="product_uom2" model="product.uom">
+            <field name="category_id" ref="product.product_uom_categ_unit"/>
+            <field name="name">PP</field>
+            <field name="factor_inv" eval="12"/>
+            <field name="uom_type">bigger</field>
+        </record>
+
+		<record id="product_uom3" model="product.uom">
+            <field name="category_id" ref="product.product_uom_categ_unit"/>
+            <field name="name">Pcks</field>
+            <field name="factor_inv" eval="12"/>
+            <field name="uom_type">bigger</field>
+        </record>
+
+		<record id="product_uom4" model="product.uom">
+            <field name="category_id" ref="product.product_uom_categ_unit"/>
+            <field name="name">MetPack</field>
+            <field name="factor_inv" eval="12"/>
+            <field name="uom_type">bigger</field>
+        </record>
+
+		<record id="product_uom5" model="product.uom">
+            <field name="category_id" ref="product.product_uom_categ_unit"/>
+            <field name="name">PrizP</field>
+            <field name="factor_inv" eval="12"/>
+            <field name="uom_type">bigger</field>
+        </record>
+
+    </data>
+</openerp>

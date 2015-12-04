@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="view_thai_pos_form" model="ir.ui.view">
+			<field name="name">pos.order.thai.form.inherit</field>
+			<field name="model">pos.order</field>
+			<field name="priority">2</field>
+			<field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+			<field name="arch" type="xml">
+				<field name="partner_id" position="after">
+					<field name="bus_session_id"/>
+					<field name="leader_commision"/>
+					<field name="ref_company_id"/>
+					<field name="company_commision"/>
+					<field name="guide_sale_commission"/>
+					<field name="net_total"/>
+
+				</field>
+
+			</field>
+		</record>
+
+		<record id="view_thai_pos_tree" model="ir.ui.view">
+			<field name="name">pos.order.thai.tree.inherit</field>
+			<field name="model">pos.order</field>
+			<field name="priority">2</field>
+			<field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+			<field name="arch" type="xml">
+
+				<field name="session_id" position="replace"/>
+				<field name="invoice_id" position="replace"/>
+				<field name="amount_total" position="replace"/>
+
+
+				<field name="partner_id" position="after">
+
+					<field name="ref_company_id"/>
+					<field name="bus_session_id"/>
+					<field name="company_commision" sum="Company commision"/>
+					<field name="leader_commision" sum="Leader commision"/>
+					<field name="guide_sale_commission" sum="Sale commissionl"/>
+					<field name="net_total" sum="Amount total"/>
+					 <field name="amount_total" sum="Amount total"/>
+				</field>
+
+
+				<field name="state" position="after">
+					<button name="button_calc_comm" type="object" string="Calc comm" />
+				</field>
+
+			</field>
+		</record>
+
+		<record id="view_thai_pos_category_form" model="ir.ui.view">
+			<field name="name">pos.category.thai.form.inherit</field>
+			<field name="model">pos.category</field>
+			<field name="priority">2</field>
+			<field name="inherit_id" ref="point_of_sale.product_pos_category_form_view"/>
+			<field name="arch" type="xml">
+				<field name="sequence" position="after">
+
+					<field name="guide_sale_commission"/>
+
+					<field name="commission_ids" nolabel="0" mode="tree">
+						<tree string="Commissions" editable="bottom">
+							<field name="commissioner_id"/>
+							<field name="commission_company"/>
+
+						</tree>
+					</field>
+				</field>
+
+			</field>
+		</record>
+
+	</data>
+</openerp>

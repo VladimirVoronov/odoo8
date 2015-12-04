@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="paperformat_rus_land" model="report.paperformat">
+			<field name="name">European A4 Land</field>
+			<field name="default" eval="True"/>
+			<field name="format">A4</field>
+			<field name="page_height">0</field>
+			<field name="page_width">0</field>
+			<field name="orientation">Landscape</field>
+			<field name="margin_top">7</field>
+			<field name="margin_bottom">7</field>
+			<field name="margin_left">7</field>
+			<field name="margin_right">15</field>
+			<field name="header_line" eval="False"/>
+			<field name="header_spacing">0</field>
+			<field name="dpi">90</field>
+		</record>
+
+		<record id="paperformat_rus_portret" model="report.paperformat">
+			<field name="name">European A4 Port</field>
+			<field name="default" eval="True"/>
+			<field name="format">A4</field>
+			<field name="page_height">0</field>
+			<field name="page_width">0</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">10</field>
+			<field name="margin_bottom">10</field>
+			<field name="margin_left">7</field>
+			<field name="margin_right">7</field>
+			<field name="header_line" eval="False"/>
+			<field name="header_spacing">0</field>
+			<field name="dpi">90</field>
+		</record>
+
+
+		<template id="root_print_form">
+
+			<div class="page">
+
+
+				<style type="text/css">
+
+
+					body {font-family:Arial,serif !important;
+
+					font-size:12px!important;
+					color:
+					<t t-esc="o.company_id.partner_id.report_colour"/>
+					!important;
+					font-weight:normal !important;
+					font-style:normal !important;
+					text-decoration: none !important;
+					}
+
+					.border-black td {
+					border-top: 1px solid black !important;
+
+					}
+					.table-condensed > thead > tr > th {
+					border-bottom: 1px solid black !important;
+
+					}
+					.table-condensed > tbody > tr {
+					page-break-inside: avoid !important;
+					}
+					.zero_min_height {
+					min-height: 0px !important;
+					}
+
+					.table-good > thead > tr > th {
+					border-bottom: 2px solid
+					<t t-esc="o.company_id.partner_id.report_colour"/>
+					!important;
+					border-left: 2px solid
+					<t t-esc="o.company_id.partner_id.report_colour"/>
+					!important;
+					border-right: 2px solid
+					<t t-esc="o.company_id.partner_id.report_colour"/>
+					!important;
+					border-top: 2px solid
+					<t t-esc="o.company_id.partner_id.report_colour"/>
+					!important;
+					}
+
+					.table-good > tbody > tr {
+					border-bottom: 1px solid grey !important;
+					border-left: 1x solid grey !important;
+					border-right: 1px solid grey !important;
+					border-top: 1px solid grey !important;
+					}
+
+					.table-good > tbody > tr > td {
+					border-bottom: 1px solid grey !important;
+					border-left: 1x solid grey !important;
+					border-right: 1px solid grey !important;
+					border-top: 1px solid grey !important;
+					}
+
+					.table-good > tbody > tr {
+					border-bottom: 1px solid grey !important;
+					border-left: 1x solid grey !important;
+					border-right: 1px solid grey !important;
+					border-top: 1px solid grey !important;
+					}
+
+					.big-bolder-down {
+					border-bottom: 2px solid
+					<t t-esc="o.company_id.partner_id.report_colour"/>
+					!important;
+					}
+
+					.small-bolder-down {
+					border-bottom: 1px solid grey !important;
+					}
+
+					.paint {
+
+					font-weight: bold!important;
+					font-style:normal !important;
+					text-decoration: none !important;
+
+					}
+
+					.brd-royal {
+
+					border: 4px solid
+					<t t-esc="o.company_id.partner_id.report_colour"/>
+					!important;
+					border-style: double !important;
+
+					}
+					.brd {
+
+					border: 2px solid
+					<t t-esc="o.company_id.partner_id.report_colour"/>
+					!important;
+
+					}
+
+					.bg {
+
+					background:<t t-esc="o.company_id.partner_id.report_colour"/>!important;
+
+
+					}
+
+					.weak-gread {
+
+					border: 1px solid grey !important;
+					border-left:1px solid grey !important;
+
+					}
+
+					.bg-paid{
+
+					background: url(/food/static/src/img/bg-paid.jpg) no-repeat center center fixed!important;
+
+					min-height: 150px!important;
+					background-size: cover!important;
+
+					}
+
+
+					#layer2 {
+					top: 50px; !important;
+					left: 250px; !important;
+					position: absolute!important;
+
+					z-index: 3!important;
+					}
+
+				</style>
+
+
+				<div class="row mt8 mb8">
+					<div class="col-xs-4">
+						<div class="pull-left">
+							<span t-field="o.company_id.logo" t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img-rounded&quot;}"/>
+						</div>
+
+					</div>
+
+					<div class="col-xs-4">
+						<t t-raw="header_hook" name='body_layout_hook'/>
+						<h3 class="text-center">เอกสารออกเปนชุด</h3>
+					</div>
+
+					<t t-raw="stamp_hook" name='stamp_hook'/>
+
+					<div class="col-xs-4 text-right">
+						<h3>
+							<t t-esc="o.company_id.partner_id.name"/>
+
+							<br/>
+
+							<t t-esc="o.company_id.partner_id.thai_name"/>
+						</h3>
+
+						<t t-esc="o.company_id.partner_id.street"/>
+						<t t-esc="o.company_id.partner_id.street2"/>
+						<br/>
+						<t t-esc="o.company_id.partner_id.city"/>
+						<t t-esc="o.company_id.partner_id.country_id.name"/>
+						<t t-esc="o.company_id.partner_id.zip"/>
+
+						<br/>
+						<t t-esc="o.company_id.partner_id.thai_street"/>
+						<t t-esc="o.company_id.partner_id.thai_street2"/>
+						<br/>
+						<t t-esc="o.company_id.partner_id.thai_city"/>
+						<t t-esc="o.company_id.partner_id.thai_country"/>
+						<t t-esc="o.company_id.partner_id.zip"/>
+						<br/>
+						โทรศัพท / fax :
+						<t t-esc="o.company_id.partner_id.fax"/>
+						<br/>
+						มือถือ / tel:
+						<t t-esc="o.company_id.partner_id.phone"/>
+						<br/>
+						อีเมลล / e-mail:
+						<t t-esc="o.company_id.partner_id.email"/>
+						<br/>
+						เลขประจําตัวผูเสียภาษีอากร / Tax ID.
+						<br/>
+						<t t-esc="o.company_id.partner_id.vat_number"/>
+
+
+					</div>
+				</div>
+
+
+				<div class="row brd">
+					<div class="col-xs-8 brd" style="height: 120px !important;">
+						<div class="row mt8 mb8">
+							<div class="col-xs-4">
+								<strong class="paint">ชื่อ / ที่อยูลูกคา</strong>
+								<br/>
+								<strong class="paint">Customer Name, Address</strong>
+							</div>
+							<div class="col-xs-8">
+								<t t-esc="o.partner_invoice_id.name"/>
+								<br/>
+								<t t-esc="o.partner_invoice_id.street"/>
+								<t t-esc="o.partner_invoice_id.street2"/>
+								<br/>
+								<t t-esc="o.partner_invoice_id.city"/>
+								<t t-esc="o.partner_invoice_id.country_id.name"/>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-4">
+								<strong class="paint">เลขประจําตัวผูเสียภาษีอากร / Tax</strong>
+							</div>
+							<div class="col-xs-8">
+								<t t-esc="o.partner_id.vat_number"/>
+							</div>
+						</div>
+
+					</div>
+					<div class="col-xs-4 text-center brd" style="height: 120px !important;">
+						<div class="row mt8 mb8 text-left">
+							<div class="col-xs-6">
+								<strong class="paint">เลขที่ /Doc. No</strong>
+							</div>
+							<div class="col-xs-6 text-center">
+								<strong class="paint">
+									<t t-esc="o.name"/>
+								</strong>
+							</div>
+						</div>
+
+						<div class="row mt8 mb8 text-left">
+							<div class="col-xs-6">
+								<strong class="paint">วันที่ / Date</strong>
+							</div>
+							<div class="col-xs-6 text-center">
+
+								<p t-field="o.date_order" t-field-options='{"widget": "date"}'/>
+							</div>
+						</div>
+
+						<div class="row  text-center">
+							<div class="col-xs-6">
+								Rep
+							</div>
+							<div class="col-xs-6">
+								P.O. No.
+							</div>
+						</div>
+
+						<div class="row  text-center">
+							<div class="col-xs-6">
+								<t t-esc="o.partner_invoice_id.name"/>
+							</div>
+							<div class="col-xs-6">
+								<t t-esc="o.partner_invoice_id.zip"/>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row">
+					<table class="table table-good col-xs-12">
+						<thead>
+							<tr>
+								<th class="text-center">
+									<strong class="paint">#</strong>
+								</th>
+								<th class="text-center">
+									<strong class="paint">Brand</strong>
+									<br/>
+									แบรนดสินคา
+								</th>
+								<th class="text-center">
+									<strong class="paint">Description</strong>
+									<br/>
+									รายละเอียด
+								</th>
+								<th class="text-center">
+									<strong class="paint">Quantity</strong>
+									<br/>
+									จํานวน
+								</th>
+								<th class="text-center">
+									<strong class="paint">Unit</strong>
+									<br/>
+									หนวย
+								</th>
+								<th class="text-center">
+									<strong class="paint">Price</strong>
+									<br/>
+									หนวยละ
+								</th>
+								<th class="text-center">
+									<strong class="paint">Amount</strong>
+									<br/>
+									จํานวนเงิน
+								</th>
+							</tr>
+						</thead>
+						<tbody class="invoice_tbody">
+							<tr t-foreach="o.order_line" t-as="l">
+								<td>
+									<span t-field="l.serial_index"/>
+								</td>
+								<td>
+									<span t-field="l.product_id.product_brand_id.name"/>
+								</td>
+								<td>
+									<span t-field="l.name"/>
+								</td>
+								<td class="text-right">
+									<span t-field="l.product_uom_qty"/>
+								</td>
+								<td class="text-right">
+									<span t-field="l.product_uom.name"/>
+								</td>
+								<td class="text-right">
+									<span t-field="l.price_unit"
+										  t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+								</td>
+								<td class="text-right">
+									<span t-field="l.price_subtotal"
+										  t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="row ">
+
+					<div class="col-xs-2">
+
+						<div class="pull-left">
+							<strong class="paint">Delivery to:</strong>
+						</div>
+
+					</div>
+
+					<div class="col-xs-6">
+
+						<div class="pull-left">
+							<t t-esc="o.partner_shipping_id.name"/>
+							<br/>
+							<t t-esc="o.partner_shipping_id.street"/>
+							<t t-esc="o.partner_shipping_id.street2"/>
+							<br/>
+							<t t-esc="o.partner_shipping_id.city"/>
+							<t t-esc="o.partner_shipping_id.zip"/>
+							<t t-esc="o.partner_shipping_id.country_id.name"/>
+
+
+						</div>
+
+					</div>
+
+					<div class="col-xs-4 big-bolder-down">
+
+						<div class="pull-right">
+							<table>
+								<tr>
+									<td>
+										<strong class="paint">รวมเงิน / Total</strong>
+									</td>
+									<td class="text-right">
+										<span t-field="o.amount_untaxed" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<strong class="paint">ภาษีมูลคาเพิ่ม / VAT</strong>
+									</td>
+									<td class="text-right">
+										<span t-field="o.amount_tax" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<strong class="paint">ยอดเงินสุทธิ / Sub Total</strong>
+									</td>
+									<td class="text-right">
+										<span t-field="o.amount_total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-8">
+
+
+					</div>
+
+
+					<div class="col-xs-4 brd-royal text-center">
+						<strong class="paint">Please pay to
+							<t t-esc="o.company_id.name"/>
+							Account:
+						</strong>
+						<br/>
+
+						<t t-foreach="o.company_id.bank_ids" t-as="bank">
+							<t t-esc="bank.bank_name"/>
+							:
+							<t t-esc="bank.acc_number"/>
+							<br/>
+						</t>
+
+					</div>
+				</div>
+				<br/>
+				<div class="row bg">
+
+					<div class="col-xs-12">
+						<br></br>
+						<br></br>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-4">
+						<p class="paint">ผูสงของ / Delivered by</p>
+						<p>วันท</p>
+					</div>
+					<div class="col-xs-4">
+						<p class="paint">ผูรับของ / Receiver</p>
+						<p>วันท</p>
+					</div>
+					<div class="col-xs-4">
+						<p class="paint">ผูมีอํานาจลงนาม / Authorized Signature</p>
+						<p>วันท</p>
+					</div>
+				</div>
+
+
+			</div>
+
+		</template>
+
+		<template id="thai_invoice">
+
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+
+					<t t-call="food.root_print_form">
+
+						<t t-set="header_hook">
+							<div class="text-center lead">
+								<h3>ตนฉบับใบกํากับภาษ</h3>
+								<h3>TAX INVOICE</h3>
+							</div>
+						</t>
+
+						<t t-if="o.state=='cancel' ">
+
+							<t t-set="stamp_hook">
+								<div class="col-xs-4" id="layer2">
+									<h3 class="text-center">
+
+										<img src="food/static/src/img/cancel.png"/>
+
+									</h3>
+								</div>
+							</t>
+
+						</t>
+
+					</t>
+					<t t-call="food.root_print_form">
+						<t t-set="header_hook">
+							<div class="text-center lead">
+								<h3>ใบสงสืนคา / ใบแจงหน</h3>
+								<h3>DELIVERY ORDER / INVOICE</h3>
+							</div>
+						</t>
+					</t>
+
+					<t t-call="food.root_print_form">
+						<t t-set="header_hook">
+							<div class="text-center lead">
+								<h3>ใบสงสืนคา / ใบแจงหน</h3>
+								<h3>DELIVERY ORDER / TAX INVOICE COPY</h3>
+							</div>
+						</t>
+					</t>
+
+
+					<t t-call="food.root_print_form">
+
+						<t t-set="header_hook">
+							<div class="text-center lead">
+								<h3>ใบเสร็จรับเงิน</h3>
+								<h3>RECEIPT</h3>
+							</div>
+						</t>
+
+						<t t-if="o.invoiced">
+
+							<t t-set="stamp_hook">
+								<div class="col-xs-4" id="layer2">
+									<h3 class="text-center">
+										<img src="food/static/src/img/paid.png"/>
+										<h3><t t-esc="o.last_pay_date"/></h3>
+									</h3>
+								</div>
+							</t>
+
+						</t>
+					</t>
+				</t>
+			</t>
+
+		</template>
+
+
+		<report
+				id="thai_account_invoice2"
+				model="sale.order"
+				string="Thai invoice"
+
+				report_type="qweb-pdf"
+
+				name="food.thai_invoice"
+				file="food.thai_invoice"
+				attachment_use="False"
+				/>
+
+		<record model="ir.ui.view" id="event_order_line2">
+			<field name="name">event.sale.order2</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='company_id']" position="replace">
+					<field name="company_id" readonly="0" string="cccc'"/>
+
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</openerp>

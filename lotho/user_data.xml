@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="0">
+		<record id="type_T" model="shipments.service_type">
+			<field name="code">T</field>
+			<field name="name">Royal Mail Tracked   </field>
+		</record>
+		<record id="type_I" model="shipments.service_type">
+			<field name="code">I</field>
+			<field name="name">International</field>
+		</record>
+	
+		<record id="type_R" model="shipments.service_type">
+			<field name="code">R</field>
+			<field name="name">Tracked Returns</field>
+		</record>									
+
+		<record id="off6" model="shipments.service">
+			<field name="service_type_id" ref="type_I" />
+			<field name="service_offering_code">OLA</field>
+			<field name="service_offering_name">INTERNATIONAL STANDARD ON ACCOUNT</field>
+		</record>
+		<record id="off8" model="shipments.service">
+			<field name="service_type_id" ref="type_I" />
+			<field name="service_offering_code">OTC</field>
+			<field name="service_offering_name">INTERNATIONAL TRACKED AND SIGNED ON ACCT</field>
+		</record>
+		<record id="off10" model="shipments.service">
+			<field name="service_type_id" ref="type_I" />
+			<field name="service_offering_code">OTA</field>
+			<field name="service_offering_name">INTERNATIONAL TRACKED ON ACCOUNT</field>
+		</record>
+		<record id="off12" model="shipments.service">
+			<field name="service_type_id" ref="type_I" />
+			<field name="service_offering_code">OSA</field>
+			<field name="service_offering_name">INTERNATIONAL SIGNED ON ACCOUNT</field>
+		</record>
+		
+
+		<record id="new_off_1" model="shipments.service">
+			<field name="service_type_id" ref="type_T" />
+			<field name="service_offering_code">TPN</field>
+			<field name="service_offering_name">ROYAL MAIL TRACKED 24</field>
+		</record>
+		<record id="new_off_2" model="shipments.service">
+			<field name="service_type_id" ref="type_T" />
+			<field name="service_offering_code">TPS</field>
+			<field name="service_offering_name">ROYAL MAIL TRACKED 48</field>
+		</record>
+		
+		<record id="new_off_101" model="shipments.service">
+			<field name="service_type_id" ref="type_R" />
+			<field name="service_offering_code">TSS</field>
+			<field name="service_offering_name">ROYAL MAIL TRACKED RETURNS 48</field>
+		</record>
+		
+		<record id="new_off_102" model="shipments.service">
+			<field name="service_type_id" ref="type_R" />
+			<field name="service_offering_code">TSN</field>
+			<field name="service_offering_name">ROYAL MAIL TRACKED RETURNS 24</field>
+		</record>
+		
+		<!--
+		<record id="new_off_0" model="shipments.service">
+			<field name="service_type_id" ref="type_T" />
+			<field name="service_offering_code">TPL</field>
+			<field name="service_offering_name">ROYAL MAIL TRACKED 48 (HV)</field>
+		</record>
+
+		<record id="new_off_3" model="shipments.service">
+			<field name="service_type_id" ref="type_T" />
+			<field name="service_offering_code">TRM</field>
+			<field name="service_offering_name">ROYAL MAIL TRACKED 24 (HV)</field>
+		</record>
+		<record id="new_off_4" model="shipments.service">
+			<field name="service_type_id" ref="type_T" />
+			<field name="service_offering_code">TRN</field>
+			<field name="service_offering_name">ROYAL MAIL TRACKED 24 (LBT)</field>
+		</record>
+		<record id="new_off_5" model="shipments.service">
+			<field name="service_type_id" ref="type_T" />
+			<field name="service_offering_code">TRS</field>
+			<field name="service_offering_name">ROYAL MAIL TRACKED 48 (LBT)</field>
+		</record>	
+		 -->
+		<record id="new_format_1" model="shipments.service_format">
+			<field name="service_id" ref="new_off_1" />
+			<field name="code">N</field>
+			<field name="name">International Format Not Applicable</field>
+		</record>
+		<record id="new_format2" model="shipments.service_format">
+			<field name="service_id" ref="new_off_1" />
+			<field name="code">N</field>
+			<field name="name">International Format Not Applicable</field>
+		</record>
+		<record id="new_format101" model="shipments.service_format">
+			<field name="service_id" ref="new_off_101" />
+			<field name="code">N</field>
+			<field name="name">International Format Not Applicable</field>
+		</record>
+		<record id="new_format102" model="shipments.service_format">
+			<field name="service_id" ref="new_off_102" />
+			<field name="code">N</field>
+			<field name="name">International Format Not Applicable</field>
+		</record>							
+		<record id="format1" model="shipments.service_format">
+			<field name="service_id" ref="off12" />
+			<field name="code">E</field>
+			<field name="name">E1</field>
+		</record>
+		<record id="format2" model="shipments.service_format">
+			<field name="service_id" ref="off10" />
+			<field name="code">E</field>
+			<field name="name">E2</field>
+		</record>
+		<record id="format3" model="shipments.service_format">
+			<field name="service_id" ref="off8" />
+			<field name="code">E</field>
+			<field name="name">E3</field>
+		</record>
+		<record id="format4" model="shipments.service_format">
+			<field name="service_id" ref="off6" />
+			<field name="code">E</field>
+			<field name="name">E4</field>
+		</record>
+		<!-- ('TRM', 'TRM'), ('MP6', 'MP6')], string="Service", required=True, default='TPS') -->
+	    <record id="ir_cron_shipment" model="ir.cron">
+            <field name="name">Shipment</field>
+            <field name="interval_number">30</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model">shipments</field>
+            <field name="function">cron_check</field>
+            <field name="args">()</field>
+          
+            <field name="active" eval="True"/>
+        </record>
+         <record id="ir_cron_shipment_sales" model="ir.cron">
+            <field name="name">Shipment Sales</field>
+            <field name="interval_number">30</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model">sale.order</field>
+            <field name="function">cron_check</field>
+            <field name="args">()</field>
+            
+            <field name="active" eval="True"/>
+        </record>
+	</data>
+</openerp>

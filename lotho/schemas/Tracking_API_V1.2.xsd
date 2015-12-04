@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+#####################################################################################################################################################
+#  Description:	Schema for Royal Mail Tracking API Public Facing XSD
+#  Revision:    1.2
+#  Date: 		14/05/2014
+#####################################################################################################################################################
+#  History:
+#  Version		Date 			Author		                     Description of Change
+#  v0.1			24/06/2013		Somsubhra Bhattacharya(CSC)      Initial Draft
+#  v0.2         29/06/2013      Somsubhra Bhattacharya(CSC)		 Modified to correct errors and incorporate latest design
+#  v0.3         13/09/2013      Somsubhra Bhattacharya(CSC)      As per RM request, changed getItemScaled to getProofOfDelivery
+#  v0.4         17/09/2013      Somsubhra Bhattacharya(CSC)      Added header and footer text fields for details response.
+#  v0.5         30/09/2013      Somsubhra Bhattacharya(CSC)      Max no of items/request set to 5 + made tracking number mandatory non-nillable input
+#  v0.6         03/10/2013      Somsubhra Bhattacharya(CSC)      Amended XSD based on feedback from RM
+#  v0.7			18/10/2013		Vaishali Gupta(CSC)				 Amended as per the changes requested by RM
+#  v0.8         11/11/2013      Somsubhra Bhattacharya(CSC)      Aligned with WSDL version 0.8
+#  v1.0         15/01/2014      Somsubhra Bhattacharya(CSC)      Baselined FE XSD for Tracking API 
+#  v1.1         14/05/2014      Somsubhra Bhattacharya(CSC)      Updated XSD to import CDM v2.2
+#  v1.2         06/06/2014      Somsubhra Bhattacharya(CSC)      Updated XSD to fix defects 622 and 630 
+#####################################################################################################################################################
+-->
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified" version="1.2"
+	targetNamespace="http://www.royalmailgroup.com/api/track/V1" xmlns:tns="http://www.royalmailgroup.com/api/track/V1"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rd="http://www.royalmailgroup.com/cm/referenceData/V3"
+	xmlns:com="http://www.royalmailgroup.com/cm/common/V4" xmlns:dt="http://www.royalmailgroup.com/cm/rmDatatypes/V1"
+	xmlns:int="http://www.royalmailgroup.com/integration/core/V1">
+
+	<xs:import namespace="http://www.royalmailgroup.com/integration/core/V1"
+		schemaLocation="CDM/CommonIntegrationSchemaV1_9.xsd" />
+	<xs:import namespace="http://www.royalmailgroup.com/cm/rmDatatypes/V1"
+		schemaLocation="CDM/DatatypesV2_2.xsd" />
+	<xs:import namespace="http://www.royalmailgroup.com/cm/common/V4"
+		schemaLocation="CDM/CommonClassesV2_2.xsd" />
+	<xs:import namespace="http://www.royalmailgroup.com/cm/referenceData/V3"
+		schemaLocation="CDM/ReferenceDataV2_2.xsd" />
+		
+		
+<xs:element name="getSingleItemHistoryRequest" type="tns:getSingleItemHistoryRequest" />
+<xs:element name="getSingleItemHistoryResponse" type="tns:getSingleItemHistoryResponse" />
+<xs:element name="getSingleItemSummaryRequest" type="tns:getSingleItemSummaryRequest" />
+<xs:element name="getSingleItemSummaryResponse" type="tns:getSingleItemSummaryResponse" />
+<xs:element name="getMultiItemSummaryRequest" type="tns:getMultiItemSummaryRequest" />
+<xs:element name="getMultiItemSummaryResponse" type="tns:getMultiItemSummaryResponse" />
+<xs:element name="getProofOfDeliveryRequest" type="tns:getProofOfDeliveryRequest" />
+<xs:element name="getProofOfDeliveryResponse" type="tns:getProofOfDeliveryResponse" />
+<xs:element name="exceptionDetails" type="tns:exceptionDetails" />
+
+
+	<xs:complexType name="TrackDetail">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="trackDate" nillable="true" type="dt:date" />			
+			<xs:element minOccurs="0" name="trackPoint" nillable="true" type="dt:identifier" />			
+			<xs:element minOccurs="0" name="trackTime" nillable="true"	type="dt:time" />
+			<xs:element minOccurs="0" name="trackTimeStr" nillable="true"	type="dt:identifier" />
+		    <xs:element minOccurs="0" name="header" nillable="true" type="dt:identifier" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="footer" nillable="true" type="tns:footer" />
+			<xs:element minOccurs="0" name="podMessage" nillable="true" type="dt:identifier" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="footer">
+		<xs:sequence>
+			<xs:element name="footerID" minOccurs="0" nillable="true"  type="dt:identifier" />
+			<xs:element name="footerText" minOccurs="0" nillable="true" type="dt:identifier" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="trackingNumbers">
+		<xs:sequence>
+			<xs:element name="trackingNumber" minOccurs="1" maxOccurs="5" type="dt:identifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="itemSummaries">
+		<xs:sequence>
+			<xs:element name="itemSummary" minOccurs="1" maxOccurs="5" type="tns:ItemSummary" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ItemSummary">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="eventDate" nillable="true"	type="dt:date" />
+			<xs:element minOccurs="0" name="eventTime" nillable="true"	type="dt:time" />
+			<xs:element minOccurs="0" name="eventTimeStr" nillable="true"	type="dt:identifier" />
+			<xs:element minOccurs="0" name="statusCode" nillable="true"	type="rd:referenceDataType" />
+			<xs:element minOccurs="0" name="summaryLine" nillable="true" type="dt:description" />
+			<xs:element minOccurs="1" name="trackingNumber" type="dt:identifier" />
+			<xs:element minOccurs="0" name="header" nillable="true" type="dt:identifier" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="footer" nillable="true" type="tns:footer" />
+		</xs:sequence>
+	</xs:complexType>	
+	
+	<xs:complexType name="WSImageResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="height" type="com:dimension" />
+			<xs:element minOccurs="0" name="image" nillable="true"	type="dt:document" />
+			<xs:element minOccurs="0" name="printedName" nillable="true" type="dt:identifier" />
+			<xs:element minOccurs="0" name="signatureTime" nillable="true" type="dt:dateTime" />
+			<xs:element minOccurs="1" name="trackingNumber" type="dt:identifier" />
+			<xs:element minOccurs="0" name="width" type="com:dimension" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+		<xs:complexType name="getSingleItemHistoryRequest">
+			<xs:sequence>
+				<xs:element name="integrationHeader" type="int:integrationHeader"  />
+				<xs:element minOccurs="1" name="trackingNumber" type="dt:identifier" />
+			</xs:sequence>
+		</xs:complexType>
+	
+	
+	
+		<xs:complexType name="getSingleItemHistoryResponse">
+			<xs:sequence>
+				<xs:element name="integrationHeader" type="int:integrationHeader"  />
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="trackDetail"	type="tns:TrackDetail" />
+				<xs:element name="integrationFooter" type="int:integrationFooter" minOccurs="0" maxOccurs="1"  />
+			</xs:sequence>
+		</xs:complexType>
+	
+	
+	
+		<xs:complexType name="getSingleItemSummaryRequest">
+			<xs:sequence>
+				<xs:element name="integrationHeader" type="int:integrationHeader"  />				
+				<xs:element name="trackingNumber" minOccurs="1" type="dt:identifier" />
+			</xs:sequence>
+		</xs:complexType>
+	
+	
+	
+		<xs:complexType name="getSingleItemSummaryResponse">
+			<xs:sequence>
+				<xs:element name="integrationHeader" type="int:integrationHeader"  />
+				<xs:element name="itemSummary" minOccurs="0" type="tns:ItemSummary" />
+				<xs:element name="integrationFooter" type="int:integrationFooter" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+		
+	
+	
+		<xs:complexType name="getMultiItemSummaryRequest">
+			<xs:sequence>
+				<xs:element name="integrationHeader" type="int:integrationHeader"  />				
+				<xs:element name="trackingNumbers" minOccurs="1" type="tns:trackingNumbers" />
+			</xs:sequence>
+		</xs:complexType>
+	
+	
+	
+		<xs:complexType name="getMultiItemSummaryResponse">
+			<xs:sequence>
+				<xs:element name="integrationHeader" type="int:integrationHeader"  />
+				<xs:element name="itemSummaries" minOccurs="0" 	type="tns:itemSummaries" />
+				<xs:element name="integrationFooter" type="int:integrationFooter" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	
+	
+	
+		<xs:complexType name="getProofOfDeliveryRequest">
+			<xs:sequence>
+				<xs:element name="integrationHeader" type="int:integrationHeader" />
+				<xs:element minOccurs="1" name="trackingNumber" type="dt:identifier" />				
+			</xs:sequence>
+		</xs:complexType>
+	
+	
+	
+		<xs:complexType name="getProofOfDeliveryResponse">
+			<xs:sequence>
+				<xs:element name="integrationHeader" type="int:integrationHeader"	 />
+				<xs:element minOccurs="0" name="wSImageResponse" type="tns:WSImageResponse" />
+				<xs:element name="integrationFooter" type="int:integrationFooter"	minOccurs="0" maxOccurs="1"  />
+			</xs:sequence>
+		</xs:complexType>
+	
+	
+	
+	  <xs:complexType name="exceptionDetails">
+		<xs:annotation>
+			<xs:documentation>Fault reporting structure</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="exceptionTransactionId" type="int:transactionId" />
+			<xs:element name="exceptionCode" type="int:errorCode" />
+			<xs:element name="exceptionText" type="dt:description" />
+		</xs:sequence>
+	  </xs:complexType>
+	
+</xs:schema>

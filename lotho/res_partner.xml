@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="view_partner_lotho_form" model="ir.ui.view">
+			<field name="name">res.partner.lotho.form.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="priority">2</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//div[@name='buttons']" position="inside">
+					<button class="oe_inline oe_stat_button" type="action" name="%(lotho.action_open_shipment_history)d" icon="fa-envelope-o" >
+						<field string="RM History" name="history_count" widget="statinfo"/>
+					</button>
+				</xpath>
+				<page name="sales_purchases" position="after">
+					<page string="Email history" col="4" name="email_history">
+						<group>
+							<group>
+								<field name="custom_message_ids" nolabel="1" mode="tree" readonly="1">
+									<tree colors="blue:subtype_id == False"  string="Email history">
+										<field name="date" />
+										<field name="subject" />
+										<field name="email_from" />
+										<field name="author_id" />
+										<field name="subtype_id" />
+									</tree>
+								</field>
+							</group>
+						</group>
+					</page>
+				</page>
+			</field>
+		</record>
+	</data>
+</openerp>

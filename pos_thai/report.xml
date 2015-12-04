@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <report
+                id="pos_sales_commision"
+                model="pos.commision_report"
+                string="Sales commision"
+                report_type="qweb-pdf"
+                name="pos_thai.sales_commision"
+                file="pos_thai.sales_commision"
+                attachment_use="False"
+                />
+
+        <record id="action_report_pos_commision" model="ir.actions.act_window">
+            <field name="name">Commision report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.commision_report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem icon="STOCK_PRINT" action="action_report_pos_commision"
+                  id="menu_pos_commision" parent="point_of_sale.menu_point_rep" sequence="6"/>
+
+        <report
+                id="client_pack_Report"
+                model="partner.pack"
+                string="Partner Pack"
+                report_type="qweb-pdf"
+                name="pos_thai.client_pack"
+                file="pos_thai.client_pack"
+                attachment_use="False"
+                />
+
+        <record id="view_pos_details" model="ir.ui.view">
+            <field name="name">POS Details</field>
+            <field name="model">pos.commision_report</field>
+            <field name="arch" type="xml">
+                <form string="POS Details">
+
+                    <group col="4" string="Dates">
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                    </group>
+
+                    <group col="4" string="Dates">
+                        <field name="type"/>
+                        <field name="partner_id"/>
+                        <field name="leader_id"/>
+                    </group>
+
+                    <footer>
+                        <button name="print_report" type="object" string="Print Report" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

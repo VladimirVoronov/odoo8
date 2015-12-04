@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<record id="np_purchase_order_form" model="ir.ui.view">
+			<field name="name">purchase.order.form</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='order_line']" position="replace">
+					<field name="order_line"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="np_purchase_order_line_tree" model="ir.ui.view">
+            <field name="name">purchase.order.line.tree</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+				<tree string="Purchase Order Lines" create="true">
+									<field name="name"  invisible="1" /> 
+                                    <field name="product_id" on_change="onchange_product_id(parent.pricelist_id,product_id,0,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)"/>
+                                    <field name="date_planned"/>
+                                    <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                                    <field name="account_analytic_id" groups="purchase.group_analytic_accounting" domain="[('type','not in',('view','template'))]"/>
+                                    <field name="product_qty" on_change="onchange_product_id(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id,parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)"/>
+                                    <field name="product_uom" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)"/>
+                                    <field name="price_unit"/>
+                                    <field name="taxes_id" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','!=','sale')]"/>
+                                    <field name="price_subtotal"/>
+									<field name="virtual_available" />
+                </tree> 
+            </field>
+        </record>
+		
+		<record id="np_order_lines_form_view" model="ir.ui.view">
+			<field name="name">purchase.order.line.form</field>
+			<field name="model">purchase.order.line</field>
+			<field name="inherit_id" ref="purchase.purchase_order_line_form"/> 
+			<field name="priority" eval="10000"/>
+			<field name="arch" type="xml">
+				<form position="replace" >
+				<form string="Purchase Order Line" version="7.0"  >
+                    <sheet>
+                        <group >
+							<group>
+								<field name="product_uom" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)"/>
+								<field name="name"  invisible="1"/>
+                                <field name="product_id" on_change="onchange_product_id(parent.pricelist_id,product_id,0,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)"/>
+                                <label for="product_qty"/>
+                                <div>
+                                    <field name="product_qty" on_change="onchange_product_id(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id,parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" class="oe_inline"/>
+                                    <field name="product_uom" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" class="oe_inline"/>
+                                </div>
+                                <field name="price_unit"/>
+                                <field name="date_planned" widget="date"/>
+                            </group>
+                            <group >
+								<field name="qty_available" />
+								<field name="virtual_available" />
+								<field name="incoming_qty" />
+								<field name="outgoing_qty" />
+                            </group>
+                        </group>
+                        <notebook>
+							<page string="Manufacture orders">
+								<field name="mo_line_by_product1"  >
+									<tree position="replace">
+										<field name="mo_name"/>
+										<field name="product_qty"/>
+										<field name="mo_product"/>
+										<field name="mo_status"/>
+
+									</tree>
+								</field>
+							</page>    
+							<page string="Inventory by locations">
+								<field name="inventory_by_locations" context="{'purchase_bom_line_id': active_id,'compute_child':False}" > 
+								<tree string="Stock Location"  >
+									<field name="location_id"/>
+									<field name="qty" />
+									<field name="qty"/> 
+									<!--<field name="np_stock_real" context="{'product_id': 484}" />  -->
+								</tree>
+								</field> 
+							</page>    
+                        </notebook>
+                    </sheet>
+				</form>
+				</form>
+			</field>
+		</record>
+
+		
+
+	</data>
+</openerp>

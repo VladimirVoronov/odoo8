@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="th.general_redactor" model="res.groups">
+            <field name="name">General redactor</field>
+            <field name="category_id" ref="base.module_category_website"/>
+        </record>
+
+        <record id="th.redactor" model="res.groups">
+            <field name="name">Redactor</field>
+            <field name="category_id" ref="base.module_category_website"/>
+        </record>
+
+        <record id="th.product_manager" model="res.groups">
+            <field name="name">Product Manager</field>
+            <field name="category_id" ref="base.module_category_website"/>
+        </record>
+    </data>
+</openerp>

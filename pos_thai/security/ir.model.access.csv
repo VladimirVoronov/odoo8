@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_base_model_res_partner,res_partner,base.model_res_partner,point_of_sale.group_pos_manager,1,0,0,0
+access_partner_pack,partner.pack,model_partner_pack,point_of_sale.group_pos_manager,1,0,1,0
+access_pos_category_commission,pos.category.commission,model_pos_category_commission,point_of_sale.group_pos_manager,1,0,1,0
+access_pos_commision_report,pos.commision_report,model_pos_commision_report,point_of_sale.group_pos_manager,1,1,1,1
+access_pos_order_session,pos.order.session,model_pos_order_session,point_of_sale.group_pos_manager,1,1,1,1

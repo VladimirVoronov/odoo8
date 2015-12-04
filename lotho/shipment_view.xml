@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record id="shipments_form" model="ir.ui.view">
+			<field name="name">shipments.form</field>
+			<field name="model">shipments</field>
+			<field name="view_type">form</field>
+			<field name="arch" type="xml">
+				<form string="shipments">
+					<sheet string="Main">
+						<group>
+							<group>
+								<field name="recipient_id" required="1" />
+							</group>
+							<group>
+								<!-- states="sent,progress,manual,done" -->
+								<button name="action_send_to_server" type="object" string="Register in RM" attrs="{'invisible': ['|',('track_number', '!=', False),('service_type_id', '=', False)]}" />
+								<button name="action_get_track_history" type="object" string="Update tracking status" attrs="{'invisible': ['|',('track_number', '=', False)]}" />
+							</group>
+							<newline />
+							<group>
+								<field name="service_type_id" attrs="{'readonly': [('track_number','!=',False)]}" />
+								<field name="offering_code_id" attrs="{'readonly': [('track_number','!=',False)], 'required':[('service_type_id','!=',False)]}" />
+								<field name="service_format_id" attrs="{'readonly': [('track_number','!=',False)]}" />
+								<field name="label1_name" invisible="1" />
+								<field name="label1" readonly="1" filename="label1_name" />
+							</group>
+							<group>
+								<field name="weight" attrs="{'readonly': [('track_number','!=',False)]}" />
+								<field name="shipping_date" attrs="{'readonly': [('track_number','!=',False)]}" />
+								<field name="service_occurence" attrs="{'readonly': [('track_number','!=',False)]}" />
+								<field name="debug_mode" attrs="{'readonly': [('track_number','!=',False)]}" />
+								<field name="rm_state" />
+								<field name="track_number" />
+								<field name="rm_tracking_link" widget="url" text="RM tracking page" attrs="{'invisible': ['|',('track_number', '=', False)]}" />
+								<field name="is_delivered" />
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="shipments_tree" model="ir.ui.view">
+			<field name="name">shipments.tree</field>
+			<field name="model">shipments</field>
+			<field name="view_type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Shipments">
+					<field name="id" />
+					<field name="debug_mode" />
+					<field name="rm_state" />
+					<field name="track_number" />
+					<field name="req_state" />
+					<button name="action_send_to_server" type="object" string="Register" />
+					<button name="action_cancel_shipment" type="object" string="Cancel" />
+				</tree>
+			</field>
+		</record>
+		<record id="shipments_history_tree" model="ir.ui.view">
+			<field name="name">shipments.history.tree</field>
+			<field name="model">shipments.history</field>
+			<field name="view_type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Shipment History">
+					<field name="track_date" />
+					<field name="track_point" />
+					<field name="track_message" />
+					<field name="model" />
+					<field name="res_id" />
+					<field name="partner_id" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_open_shipment_history">
+			<field name="context">{'search_default_partner_id': [active_id], 'default_partner_id': active_id}</field>
+			<field name="name">Shipment History</field>
+			<field name="view_mode">tree</field>
+			<field name="res_model">shipments.history</field>
+			<field name="view_id" ref="shipments_history_tree" />
+		</record>
+		<record model="ir.actions.act_window" id="action_list_shipments">
+			<field name="name">shipments</field>
+			<field name="res_model">shipments</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem id="menu_shipments" name="Shipments" sequence="10" action="action_list_shipments" />
+	</data>
+</openerp>

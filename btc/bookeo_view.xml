@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record id="view_bookeo import_form" model="ir.ui.view">
+			<field name="name">bookeo.import.form</field>
+			<field name="model">bookeo.import</field>
+			<field name="arch" type="xml">
+				<form string="Bookeo Import" version="7.0">
+					<sheet>
+
+						<div class="oe_right oe_button_box">
+
+							<button name="action_import" type="object" string="Import"/>
+						</div>
+
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_bookeo_session_form" model="ir.ui.view">
+			<field name="name">bookeo.session.form</field>
+			<field name="model">bookeo.session</field>
+			<field name="arch" type="xml">
+				<form string="Bookeo Session" version="7.0">
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name="root_product"/>
+								<field name="booking_date"/>
+								<field name="route_id"/>
+							</group>
+							<group>
+								<field name="seats_total"/>
+								<field name="seats_set"/>
+								<field name="seats_unset"/>
+							</group>
+
+							<newline/>
+
+							<group colspan="4">
+								<field name="booking_ids" mode="tree" nolabel="1">
+									<tree string="Booking" editable="bottom">
+										<field name="state" invisible="1"/>
+										<field name="vehicle_id" string="Bus"/>
+
+										<field name="partner_id" string="Agent"/>
+										<field name="voucher_no"/>
+
+										<field name="hotel_area_id"/>
+										<field name="hotel_name"/>
+										<field name="room_no"/>
+										<field name="tourists_name"/>
+
+										<field name="adult"  sum="Total adult"/>
+										<field name="child"  sum="Total child"/>
+										<field name="infant"  sum="Total infant"/>
+
+										<field name="pickup_start"/>
+										<field name="pickup_end"/>
+										<field name="ext_payment"/>
+
+										<field name="remark"/>
+									</tree>
+								</field>
+								<newline/>
+								<field name="vehicle_ids" nolabel="1"/>
+							</group>
+
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_bookeo_session_tree" model="ir.ui.view">
+			<field name="name">bookeo.session.tree</field>
+			<field name="model">bookeo.session</field>
+			<field name="arch" type="xml">
+				<tree string="Manual Invoice Taxes">
+
+					<field name="name"/>
+					<field name="route_id"/>
+					<field name="root_product"/>
+					<field name="booking_date"/>
+
+
+					<field name="seats_total"/>
+					<field name="seats_set"/>
+					<field name="seats_unset"/>
+
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_fleet_route_form" model="ir.ui.view">
+			<field name="name">fleet.route.form</field>
+			<field name="model">fleet.route</field>
+			<field name="arch" type="xml">
+				<form string="Route" version="7.0">
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name="start"/>
+								<field name="end"/>
+							</group>
+							<newline/>
+							<group>
+								<field name="pickuptime_ids" mode="tree" nolabel="1">
+									<tree string="Pickup times" editable="top/bottom">
+										<field name="area_id"/>
+										<field name="pickup_start"/>
+										<field name="pickup_end"/>
+										<field name="ext_payment"/>
+									</tree>
+								</field>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_fleet_route_tree" model="ir.ui.view">
+			<field name="name">fleet.route.tree</field>
+			<field name="model">fleet.route</field>
+			<field name="arch" type="xml">
+				<tree string="Routes">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_bookeo_session_calendar">
+			<field name="name">bookeo.session.calendar</field>
+			<field name="model">bookeo.session</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<calendar string="Sessions" date_start="booking_date" color="root_product">
+
+					<field name="root_product"/>
+					<field name="booking_date"/>
+				</calendar>
+			</field>
+		</record>
+
+
+		<record model="ir.actions.act_window" id="action_bookeo_import">
+			<field name="name">Bookeo Import</field>
+			<field name="res_model">bookeo.import</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem
+				name="Bookeo Import"
+				id="menu_bookeo_import"
+				action="action_bookeo_import"
+				parent="base.menu_product"/>
+
+		<record model="ir.actions.act_window" id="action_bookeo_session">
+			<field name="name">Bookeo Session</field>
+			<field name="res_model">bookeo.session</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,calendar,form</field>
+		</record>
+
+		<menuitem
+				name="Bookeo Session"
+				id="menu_bookeo_session"
+				action="action_bookeo_session"
+				parent="base.menu_product"/>
+
+
+		<record model="ir.actions.act_window" id="action_bookeo_booking">
+			<field name="name">Booking</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,calendar,form</field>
+			<field name="view_id" ref="view_booking_tree"/>
+			<field name="search_view_id" ref="view_booking_filter"/>
+		</record>
+
+		<menuitem
+				name="Booking"
+				id="menu_bookeo_booking"
+				action="action_bookeo_booking"
+				parent="base.menu_product"/>
+
+		<record model="ir.actions.act_window" id="action_routes">
+			<field name="name">Routes</field>
+			<field name="res_model">fleet.route</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem
+				name="Routes"
+				id="menu_routes"
+				action="action_routes"
+				parent="base.menu_product"/>
+	</data>
+</openerp>

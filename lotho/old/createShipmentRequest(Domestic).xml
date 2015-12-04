@@ -1,0 +1,89 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:v2="http://www.royalmailgroup.com/api/ship/V2" xmlns:v1="http://www.royalmailgroup.com/integration/core/V1">
+	<soapenv:Header>
+		<oas:Security />
+	</soapenv:Header>
+	<soapenv:Body>
+		<v2:createShipmentRequest>
+			<v2:integrationHeader>
+				<v1:dateTime>2015-02-09T08:52:03</v1:dateTime>
+				<v1:version>2</v1:version>
+				<v1:identification>
+					<v1:applicationId>111111113</v1:applicationId>
+					<v1:transactionId>730222611</v1:transactionId>
+				</v1:identification>
+			</v2:integrationHeader>
+			<v2:requestedShipment>
+				<v2:shipmentType>
+					<code>Delivery</code>
+				</v2:shipmentType>
+				<v2:serviceOccurrence>1</v2:serviceOccurrence>
+				<v2:serviceType>
+					<code>T</code>
+				</v2:serviceType>
+				<v2:serviceOffering>
+					<serviceOfferingCode>
+						<code>TRM</code>
+					</serviceOfferingCode>
+				</v2:serviceOffering>
+				<v2:serviceFormat>
+					<serviceFormatCode />
+				</v2:serviceFormat>
+				<v2:shippingDate>2015-02-09</v2:shippingDate>
+				<v2:recipientContact>
+					<v2:name>Mr Tom Smith</v2:name>
+					<v2:complementaryName>Department 98</v2:complementaryName>
+					<v2:telephoneNumber>
+						<countryCode>0044</countryCode>
+						<telephoneNumber>07801123456</telephoneNumber>
+					</v2:telephoneNumber>
+					<v2:electronicAddress>
+						<electronicAddress>tom.smith@royalmail.com</electronicAddress>
+					</v2:electronicAddress>
+				</v2:recipientContact>
+				<v2:recipientAddress>
+					<addressLine1>44-46 Morningside Road</addressLine1>
+					<postTown>Edinburgh</postTown>
+					<postcode>EH10 4BF</postcode>
+					<country>
+						<countryCode>
+							<code>GB</code>
+						</countryCode>
+					</country>
+				</v2:recipientAddress>
+				<v2:items>
+					<v2:item>
+						<v2:numberOfItems>2</v2:numberOfItems>
+						<v2:weight>
+							<unitOfMeasure>
+								<unitOfMeasureCode>
+									<code>g</code>
+								</unitOfMeasureCode>
+							</unitOfMeasure>
+							<value>100</value>
+						</v2:weight>
+						<v2:offlineShipments>
+							<v2:itemID>2000001</v2:itemID>
+							<v2:status>
+								<status>
+									<statusCode />
+								</status>
+								<validFrom>2015-02-09T09:52:06.000+02:00</validFrom>
+							</v2:status>
+						</v2:offlineShipments>
+						<v2:offlineShipments>
+							<v2:itemID>2000002</v2:itemID>
+							<v2:status>
+								<status>
+									<statusCode />
+								</status>
+								<validFrom>2015-02-09T09:52:06.000+02:00</validFrom>
+							</v2:status>
+						</v2:offlineShipments>
+					</v2:item>
+				</v2:items>
+				<v2:customerReference>CustSuppRef1</v2:customerReference>
+				<v2:senderReference>SenderReference1</v2:senderReference>
+			</v2:requestedShipment>
+		</v2:createShipmentRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

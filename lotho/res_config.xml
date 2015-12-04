@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="view_general_configuration_lotho" model="ir.ui.view">
+			<field name="name">base.config.settings.lotho</field>
+			<field name="model">base.config.settings</field>
+			<field name="inherit_id" ref="base_setup.view_general_configuration" />
+			<field name="arch" type="xml">
+				<xpath expr="//separator[@string='General Settings']" position='before'>
+				
+					<group string="Royal Mail Settings">
+						<div>
+							<label for="rm_app_id" />
+							<field name="rm_app_id" class="oe_inline" />
+						</div>
+						<div>
+							<label for="rm_key" />
+							<field name="rm_key" class="oe_inline" />
+						</div>
+						<div>
+							<label for="rm_cert" />
+							<field name="rm_cert" class="oe_inline" />
+						</div>
+						<div>
+							<label for="rm_login" />
+							<field name="rm_login" class="oe_inline" />
+						</div>
+						<div>
+							<label for="rm_pass" />
+							<field name="rm_pass" class="oe_inline" />
+						</div>
+					</group>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>

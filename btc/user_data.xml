@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="tour_product_attribute1" model="product.attribute">
+            <field name="name">Age</field>
+        </record>
+        <record id="tour_product_attribute2" model="product.attribute">
+            <field name="name">Price type</field>
+        </record>
+
+        <record id="tour_product_age_adult" model="product.attribute.value">
+            <field name="name">Adult</field>
+            <field name="attribute_id" ref="tour_product_attribute1"/>
+        </record>
+        <record id="tour_product_age_child4" model="product.attribute.value">
+            <field name="name">Child 4-12</field>
+            <field name="attribute_id" ref="tour_product_attribute1"/>
+        </record>
+        <record id="tour_product_age_child0" model="product.attribute.value">
+            <field name="name">Child 0-3</field>
+            <field name="attribute_id" ref="tour_product_attribute1"/>
+        </record>
+
+
+    </data>
+</openerp>

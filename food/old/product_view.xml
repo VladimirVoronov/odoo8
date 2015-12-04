@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<record id="np_product_normal_form_view" model="ir.ui.view">
+            <field name="name">product.normal.procurement.locations.inherit</field>
+            <field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view"/>
+			<field name="priority">1000</field>
+            <field name="arch" type="xml">
+				<xpath expr="//group[@name='status']" position="before">
+					<group string="By locations" > 
+					<field name="inventory_by_locations" context="{'product_id': active_id,'compute_child':False}" nolabel="1" > 
+						<tree string="Stock Location"  >
+							<field name="complete_name"/>
+							<field name="stock_real" />
+							<field name="stock_virtual"/> 
+						</tree>
+					</field> 
+					</group> 
+				 </xpath>
+			
+				<xpath expr="//page[@string='Information']/group/group/field[@name='default_code']" position="after">
+					<field name="last_inventory_date"/>
+				</xpath>
+
+				
+			</field>
+		</record>
+
+		<record id="np_product_product_tree_view" model="ir.ui.view">
+            <field name="name">product.product.tree</field>
+            <field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+				<xpath expr="//field[@name='lst_price']" position="replace">
+					<field name="last_inventory_date"/>
+				</xpath>
+				<xpath expr="//field[@name='state']" position="replace">
+					  <field name="state" invisible="1"/>
+				</xpath>
+            </field>
+        </record>
+		
+	</data>
+</openerp>

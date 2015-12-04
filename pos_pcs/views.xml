@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="assets_backend" name="pos_pcs_assets" inherit_id="point_of_sale.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/pos_pcs/static/src/js/pos.js"></script>
+            </xpath>
+        </template>
+
+
+        <record id="view_pos_deposit_master_form" model="ir.ui.view">
+            <field name="name">pos.deposit_master.form</field>
+            <field name="model">pos.deposit_master</field>
+            <field name="arch" type="xml">
+                <form string="Account Journal">
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+
+                        <label for="partner_balance" class="oe_edit_only"/>
+                        <h1>
+                            <field name="partner_balance"/>
+                        </h1>
+
+                        <label for="partner_deposit" class="oe_edit_only"/>
+                        <h1>
+                            <field name="partner_deposit"/>
+                        </h1>
+
+                        <label for="partner_balance_after" class="oe_edit_only"/>
+                        <h1>
+                            <field name="partner_balance_after"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button name="create_and_next" type="object" string="Make Deposit" class="oe_highlight"/>
+                        <button name="create_refund" type="object" string="Full refund" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="partner_deposit_tree_view">
+            <field name="name">Deposits list</field>
+            <field name="type">tree</field>
+            <field name="model">pos.partner_deposits</field>
+            <field name="arch" type="xml">
+                <tree string="Deposits list" editable="bottom">
+
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="partner_deposit"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="partner_deposit_action" model="ir.actions.act_window">
+            <field name="name">Client deposit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.deposit_master</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <record id="partner_deposit_list_action" model="ir.actions.act_window">
+            <field name="name">Deposits list</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.partner_deposits</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem action="partner_deposit_list_action"
+                  id="partner_deposit_list_action_menu"
+                  name="Deposits list"
+
+                  parent="point_of_sale.menu_point_of_sale"
+                  groups="point_of_sale.group_pos_manager"
+                  sequence="20"/>
+
+        <menuitem action="partner_deposit_action"
+                  id="partner_deposit_action_menu"
+                  name="Make deposit"
+
+                  parent="point_of_sale.menu_point_of_sale"
+                  groups="point_of_sale.group_pos_manager"
+                  sequence="20"/>
+
+    </data>
+</openerp>

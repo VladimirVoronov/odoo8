@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="OrderWidget">
+        <t t-jquery="div[class='subentry']" t-operation="after">
+            <span class="label">Client Balance: </span> <span id="client_balance" class="value">0.00 €</span>
+
+        </t>
+
+    </t>
+
+</templates>

@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <template id="client_bage" name="Client bage for pack">
+            <h4>
+
+            </h4>
+
+            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' %('Code128', bage_vals.ean13, 400, 200)"/>
+
+            <h4>
+                <t t-esc="bage_vals.ean13"/>
+            </h4>
+        </template>
+
+        <template id="report_saleorder_style" inherit_id="report.layout">
+            <xpath expr="//style" position="after">
+                <style type="text/css">
+                    .example-css-class {
+                    background-color: red;
+                    }
+                </style>
+            </xpath>
+        </template>
+
+        <template id="sales_commision">
+
+
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+
+                            <style type="text/css">
+
+                                * {
+                                vertical-align: baseline;
+                                font-weight: inherit;
+                                font-family: inherit;
+                                font-style: inherit;
+                                font-size: 100%;
+                                border: 0 none;
+                                outline: 0;
+                                padding: 0;
+                                margin: 0;
+                                }
+
+                                th {
+                                border: 2px solid black;
+                                text-align:center;
+
+                                padding-left: 5px;
+                                padding-right: 5px;
+
+                                }
+
+                                td {
+                                border: 1px solid black;
+                                padding-left: 5px;
+                                padding-right: 5px;
+                                }
+
+                                td.fix-width {
+                                width: 150;
+                                color: red;
+
+                                }
+                            </style>
+                            <table width="800" border="1" cellpadding="5" cellspacing="5"
+                                   style="border: 3px solid black;">
+
+                                <t t-if="o.type=='company'">
+                                    <h1>
+                                        Report for company
+                                        <t t-esc="o.partner_id.name"/>
+                                    </h1>
+                                </t>
+
+                                <tr>
+                                    <th>Date/Time</th>
+
+                                    <t t-if="o.type not in ['company', 'guide'] ">
+                                        <th>Company</th>
+                                    </t>
+
+                                    <th>Guide</th>
+
+                                    <t t-if="o.type not in ['company', 'guide'] ">
+                                        <th>Seller (rus)</th>
+                                    </t>
+
+                                    <th>Touris Qty</th>
+                                    <th>Vehicle type</th>
+                                    <th>Vehicle number</th>
+                                    <th>Driver</th>
+                                    <th>Total Sales</th>
+
+                                    <t t-if="o.type not in ['seller'] ">
+                                        <th>Total Guide commision</th>
+                                        <th>Guide sales per tourist</th>
+                                    </t>
+
+                                    <t t-if="o.type not in ['seller', 'guide'] ">
+                                        <th>Total Driver commision</th>
+                                    </t>
+
+                                    <t t-if="o.type not in ['company', 'guide'] ">
+                                        <th>Total Saler commision</th>
+                                    </t>
+
+                                    <t t-if="o.type not in ['seller', 'guide'] ">
+                                        <th>Total Company commision</th>
+                                    </t>
+
+                                    <t t-if="o.type not in ['company', 'seller', 'guide'] ">
+                                        <th>Net total</th>
+                                    </t>
+
+                                    <th class="fix-width">Category</th>
+                                    <th class="fix-width">Base</th>
+
+                                    <t t-if="o.type not in ['company',  'guide' ] ">
+                                        <th class="fix-width">Saler comm. %</th>
+                                        <th class="fix-width">Saler comm. summ</th>
+                                    </t>
+
+                                    <t t-if="o.type not in [ 'seller', 'guide' ] ">
+                                        <th class="fix-width">Company comm. %</th>
+                                        <th class="fix-width">Company comm. summ</th>
+                                    </t>
+
+                                </tr>
+
+                                <t t-foreach="o.get_session_arr()[0]" t-as="session">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="session.create_date"/>
+                                        </td>
+
+                                        <t t-if="o.type not in ['company', 'guide'] ">
+                                            <td>
+                                                <t t-esc="session.ref_company_id.name"/>
+                                            </td>
+                                        </t>
+
+                                        <td>
+                                            <t t-esc="session.leader_id.name"/>
+                                        </td>
+
+                                        <t t-if="o.type not in ['company', 'guide'] ">
+                                            <td>
+                                                <t t-esc="session.guide_sale_id.name"/>
+                                            </td>
+                                        </t>
+
+                                        <td>
+                                            <t t-esc="session.n_max"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="session.vehicle_type"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="session.name"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="session.driver_id.name"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="o.get_summ_by_field(session, 'amount_total')"/>
+                                        </td>
+
+                                        <t t-if="o.type not in ['seller'] ">
+                                            <td>
+                                                <t t-esc="o.get_summ_by_field(session, 'leader_commision')"/>
+                                            </td>
+
+                                            <td>
+                                                <t t-esc="round(o.get_summ_by_field(session, 'amount_total')/session.n_max,2)"/>
+                                            </td>
+                                        </t>
+
+                                        <t t-if="o.type not in ['seller', 'guide'] ">
+                                            <td>
+                                                <t t-esc="session.driver_commission"/>
+                                            </td>
+                                        </t>
+
+                                        <t t-if="o.type not in ['company', 'guide'] ">
+                                            <td>
+                                                <t t-esc="o.get_summ_by_field(session, 'guide_sale_commission')"/>
+                                            </td>
+                                        </t>
+
+                                        <t t-if="o.type not in ['seller', 'guide'] ">
+                                            <td>
+                                                <t t-esc="o.get_summ_by_field(session, 'company_commision')"/>
+                                            </td>
+                                        </t>
+
+                                        <t t-if="o.type not in ['company', 'seller', 'guide'] ">
+                                            <td>
+                                                <t t-esc="o.get_summ_by_field(session, 'net_total')"/>
+                                            </td>
+                                        </t>
+
+                                        <td width="500px" colspan="6" style=" padding-left: 0px; padding-right: 0px;">
+                                            <table>
+
+                                                <t t-foreach="o.get_categ_arr(session)" t-as="categ">
+                                                    <tr>
+                                                        <td class="fix-width">
+                                                            <t t-esc="categ['name']"/>
+                                                        </td>
+                                                        <td class="fix-width">
+                                                            <t t-esc="categ['price_subtotal_incl']"/>
+                                                        </td>
+
+                                                        <t t-if="o.type not in ['company',  'guide' ] ">
+                                                            <td class="fix-width">
+                                                                <t t-esc="categ['guide_sale_commission_per']"/>
+                                                                %
+                                                            </td>
+                                                            <td class="fix-width">
+                                                                <t t-esc="categ['guide_sale_commission']"/>
+                                                            </td>
+                                                        </t>
+
+                                                        <t t-if="o.type not in [ 'seller', 'guide' ] ">
+                                                            <td class="fix-width">
+                                                                <t t-esc="categ['commission_company_per']"/>%
+                                                            </td>
+                                                            <td class="fix-width">
+                                                                <t t-esc="categ['guide_sale_commission']"/>
+                                                            </td>
+                                                        </t>
+
+                                                    </tr>
+                                                </t>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                            </table>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+        <template id="client_pack">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <table width="800" border="1" cellpadding="5" cellspacing="5"
+                                   style="border: 3px solid black;">
+
+
+                                <t t-foreach="o.get_report_list()[0]" t-as="row">
+                                    <tr>
+                                        <td align="center" border="1" height="15.4cm" style="border: 3px solid black;">
+                                            <t t-set="bage_vals" t-value="row[0]"/>
+                                            <t t-call="pos_thai.client_bage"/>
+
+                                        </td>
+                                        <td align="center" border="1" height="15.4cm" style="border: 3px solid black;">
+                                            <t t-set="bage_vals" t-value="row[1]"/>
+                                            <t t-call="pos_thai.client_bage"/>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+        <template id="report_saleorder_stylezz" inherit_id="report.layout">
+            <xpath expr="//style" position="replace">
+                <style type="text/css">
+
+                </style>
+            </xpath>
+        </template>
+
+        <template id="external_layout_header" inherit_id="report.external_layout_header">
+            <xpath expr="//div" position="replace">
+                <div class="footer">
+                </div>
+
+            </xpath>
+        </template>
+
+        <record id="paperformat_rus_land" model="report.paperformat">
+            <field name="name">European A4 Land</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">7</field>
+            <field name="margin_bottom">7</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">15</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="paperformat_rus_portret" model="report.paperformat">
+            <field name="name">European A4 Port</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+    </data>
+</openerp>

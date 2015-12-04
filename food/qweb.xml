@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+
+	<t t-extend="mail.thread.message">
+		<t t-jquery="span[t-att-title='widget.date']" t-operation="before">
+
+			<span class='oe_subtle'>•</span>
+			<span>To postbox: <t t-esc="widget.extra_partners_nbr"/></span>
+
+		</t>
+
+	</t>
+
+
+
+
+</template>

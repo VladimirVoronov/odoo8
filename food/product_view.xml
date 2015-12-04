@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+
+		<record id="tour_product_normal_form_view2" model="ir.ui.view">
+			<field name="name">product.template.tour.locations.inherit2</field>
+			<field name="model">product.template</field>
+			<field name="inherit_id" ref="product.product_template_form_view"/>
+			<field name="priority">100</field>
+			<field name="arch" type="xml">
+
+				<xpath expr="//field[@name='list_price']" position="after">
+					<field name="max"/>
+					<field name="gross_price"/>
+					<field name="vat_code"/>
+					<field name="vat_code_purch"/>
+					<field name="ppb"/>
+					<field name="a_c"/>
+					<field name="vat_gency"/>
+
+					<field name="aiv"/>
+					<field name="pur_ro_res"/>
+
+				</xpath>
+
+			</field>
+		</record>
+
+	</data>
+</openerp>

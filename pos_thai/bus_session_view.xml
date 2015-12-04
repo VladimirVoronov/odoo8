@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="pos_order_session_tree_view">
+			<field name="name">Bus sessions Tree</field>
+			<field name="type">tree</field>
+			<field name="model">pos.order.session</field>
+			<field name="arch" type="xml">
+				<tree string="Bus sessions" editable="top" colors="green:state == 'done';red:state == 'draft'">
+
+					<field name="id"/>
+					<field name="session_date"/>
+
+					<field name="state" invisible="1"/>
+
+					<field name="leader_id" default_focus="1"/>
+					<field name="thai_leader_id" />
+					<field name="excursion_name" />
+
+					<field name="n_max"/>
+
+					<field name="ref_company_id"/>
+
+					<field name="guide_sale_id"/>
+
+					<field name="driver_id"/>
+					<field name="name"/>
+					<field name="vehicle_type"/>
+
+					<button name="close_session" type="object" string="Close" states="draft"/>
+
+				</tree>
+			</field>
+		</record>
+
+		<record id="pos_order_session_action" model="ir.actions.act_window">
+			<field name="name">Bus session</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">pos.order.session</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem
+				parent="point_of_sale.menu_point_of_sale"
+				action="pos_order_session_action"
+				id="pos_order_session_menu"
+				sequence="200"
+				groups="point_of_sale.group_pos_manager"/>
+
+		<record id="action_partner_guides_form" model="ir.actions.act_window">
+			<field name="name">Guides</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner</field>
+			<field name="view_type">form</field>
+			<field name="domain">[]</field>
+			<field name="view_mode">kanban,tree,form</field>
+			<field name="context">{ 'search_default_customer': 1,'default_customer': 1}</field>
+			<field name="filter" eval="True"/>
+		</record>
+
+		<menuitem
+				parent="point_of_sale.menu_point_of_sale"
+				action="action_partner_guides_form"
+				id="pos_order_guides_menu"
+				sequence="250"
+				groups="point_of_sale.group_pos_manager"/>
+	</data>
+</openerp>
